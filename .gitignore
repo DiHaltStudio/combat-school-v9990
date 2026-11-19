@@ -1,0 +1,17 @@
+# Local original game inputs and generated files
+build/
+__pycache__/
+.cache/
+snap/
+/ARCADE/
+/musicPsg/driver/
+/musicPsg/regs/
+/local-inputs/
+/release/*
+!/release/.gitkeep
+*.rom
+*.zip
+*.aux
+*.log
+*.out
+*.toc

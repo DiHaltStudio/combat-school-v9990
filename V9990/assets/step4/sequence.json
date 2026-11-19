@@ -1,0 +1,615 @@
+{
+  "description": "Apariciones aproximadas observadas en el vídeo a 30 Hz; el tiempo cero corresponde al segundo 4.0 de la grabación. Los impactos ocultan eventos.",
+  "fps": 30,
+  "events": [
+    {
+      "tick": 26,
+      "x": 36,
+      "y": 54,
+      "motion": "diagonal_right",
+      "source": "observado"
+    },
+    {
+      "tick": 57,
+      "x": 36,
+      "y": 54,
+      "motion": "diagonal_right",
+      "source": "observado"
+    },
+    {
+      "tick": 100,
+      "x": 0,
+      "y": 74,
+      "motion": "right",
+      "source": "convoy observado"
+    },
+    {
+      "tick": 103,
+      "x": 0,
+      "y": 82,
+      "motion": "right",
+      "source": "convoy observado"
+    },
+    {
+      "tick": 106,
+      "x": 0,
+      "y": 90,
+      "motion": "right",
+      "source": "convoy observado"
+    },
+    {
+      "tick": 109,
+      "x": 0,
+      "y": 98,
+      "motion": "right",
+      "source": "convoy observado"
+    },
+    {
+      "tick": 112,
+      "x": 0,
+      "y": 106,
+      "motion": "right",
+      "source": "convoy observado"
+    },
+    {
+      "tick": 115,
+      "x": 0,
+      "y": 114,
+      "motion": "right",
+      "source": "convoy observado"
+    },
+    {
+      "tick": 238,
+      "x": 91,
+      "y": 58,
+      "motion": "diagonal_left",
+      "source": "entrada observada; impactos ocultan algunos robots"
+    },
+    {
+      "tick": 246,
+      "x": 91,
+      "y": 58,
+      "motion": "diagonal_left",
+      "source": "entrada observada; impactos ocultan algunos robots"
+    },
+    {
+      "tick": 253,
+      "x": 91,
+      "y": 58,
+      "motion": "diagonal_left",
+      "source": "entrada observada; impactos ocultan algunos robots"
+    },
+    {
+      "tick": 261,
+      "x": 91,
+      "y": 58,
+      "motion": "diagonal_left",
+      "source": "entrada observada; impactos ocultan algunos robots"
+    },
+    {
+      "tick": 269,
+      "x": 91,
+      "y": 58,
+      "motion": "diagonal_left",
+      "source": "entrada observada; impactos ocultan algunos robots"
+    },
+    {
+      "tick": 277,
+      "x": 91,
+      "y": 58,
+      "motion": "diagonal_left",
+      "source": "entrada observada; impactos ocultan algunos robots"
+    },
+    {
+      "tick": 285,
+      "x": 91,
+      "y": 58,
+      "motion": "diagonal_left",
+      "source": "entrada observada; impactos ocultan algunos robots"
+    },
+    {
+      "tick": 350,
+      "x": 113,
+      "y": 54,
+      "motion": "front_fast",
+      "source": "entrada frontal observada"
+    },
+    {
+      "tick": 358,
+      "x": 113,
+      "y": 54,
+      "motion": "front_fast",
+      "source": "entrada frontal observada"
+    },
+    {
+      "tick": 367,
+      "x": 113,
+      "y": 54,
+      "motion": "front_fast",
+      "source": "entrada frontal observada"
+    },
+    {
+      "tick": 375,
+      "x": 113,
+      "y": 54,
+      "motion": "front_fast",
+      "source": "entrada frontal observada"
+    },
+    {
+      "tick": 384,
+      "x": 113,
+      "y": 54,
+      "motion": "front_fast",
+      "source": "entrada frontal observada"
+    },
+    {
+      "tick": 392,
+      "x": 113,
+      "y": 54,
+      "motion": "front_fast",
+      "source": "entrada frontal observada"
+    },
+    {
+      "tick": 401,
+      "x": 113,
+      "y": 54,
+      "motion": "front_fast",
+      "source": "entrada frontal observada"
+    },
+    {
+      "tick": 467,
+      "x": 221,
+      "y": 53,
+      "motion": "curve_left",
+      "source": "entrada lateral observada"
+    },
+    {
+      "tick": 475,
+      "x": 221,
+      "y": 53,
+      "motion": "curve_left",
+      "source": "entrada lateral observada"
+    },
+    {
+      "tick": 483,
+      "x": 221,
+      "y": 53,
+      "motion": "curve_left",
+      "source": "entrada lateral observada"
+    },
+    {
+      "tick": 491,
+      "x": 221,
+      "y": 53,
+      "motion": "curve_left",
+      "source": "entrada lateral observada"
+    },
+    {
+      "tick": 499,
+      "x": 221,
+      "y": 53,
+      "motion": "curve_left",
+      "source": "entrada lateral observada"
+    },
+    {
+      "tick": 508,
+      "x": 221,
+      "y": 53,
+      "motion": "curve_left",
+      "source": "entrada lateral observada"
+    },
+    {
+      "tick": 638,
+      "x": 88,
+      "y": 54,
+      "motion": "front",
+      "source": "formación observada"
+    },
+    {
+      "tick": 641,
+      "x": 105,
+      "y": 54,
+      "motion": "front",
+      "source": "formación observada"
+    },
+    {
+      "tick": 644,
+      "x": 122,
+      "y": 54,
+      "motion": "front",
+      "source": "formación observada"
+    },
+    {
+      "tick": 647,
+      "x": 140,
+      "y": 54,
+      "motion": "front",
+      "source": "formación observada"
+    },
+    {
+      "tick": 650,
+      "x": 157,
+      "y": 54,
+      "motion": "front",
+      "source": "formación observada"
+    },
+    {
+      "tick": 653,
+      "x": 174,
+      "y": 54,
+      "motion": "front",
+      "source": "formación observada"
+    },
+    {
+      "tick": 656,
+      "x": 191,
+      "y": 54,
+      "motion": "front",
+      "source": "formación observada"
+    },
+    {
+      "tick": 733,
+      "x": 104,
+      "y": 54,
+      "motion": "front_fast",
+      "source": "entrada frontal observada"
+    },
+    {
+      "tick": 741,
+      "x": 104,
+      "y": 54,
+      "motion": "front_fast",
+      "source": "entrada frontal observada"
+    },
+    {
+      "tick": 749,
+      "x": 104,
+      "y": 54,
+      "motion": "front_fast",
+      "source": "entrada frontal observada"
+    },
+    {
+      "tick": 757,
+      "x": 104,
+      "y": 54,
+      "motion": "front_fast",
+      "source": "entrada frontal observada"
+    },
+    {
+      "tick": 765,
+      "x": 104,
+      "y": 54,
+      "motion": "front_fast",
+      "source": "entrada frontal observada"
+    },
+    {
+      "tick": 814,
+      "x": 55,
+      "y": 55,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    },
+    {
+      "tick": 820,
+      "x": 225,
+      "y": 56,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    },
+    {
+      "tick": 823,
+      "x": 89,
+      "y": 54,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    },
+    {
+      "tick": 826,
+      "x": 191,
+      "y": 55,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    },
+    {
+      "tick": 829,
+      "x": 37,
+      "y": 55,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    },
+    {
+      "tick": 832,
+      "x": 123,
+      "y": 56,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    },
+    {
+      "tick": 835,
+      "x": 207,
+      "y": 55,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    },
+    {
+      "tick": 841,
+      "x": 157,
+      "y": 55,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    },
+    {
+      "tick": 865,
+      "x": 173,
+      "y": 54,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    },
+    {
+      "tick": 877,
+      "x": 45,
+      "y": 54,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    },
+    {
+      "tick": 884,
+      "x": 217,
+      "y": 56,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    },
+    {
+      "tick": 886,
+      "x": 71,
+      "y": 54,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    },
+    {
+      "tick": 893,
+      "x": 45,
+      "y": 54,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    },
+    {
+      "tick": 903,
+      "x": 105,
+      "y": 54,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    },
+    {
+      "tick": 907,
+      "x": 208,
+      "y": 56,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    },
+    {
+      "tick": 911,
+      "x": 105,
+      "y": 54,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    },
+    {
+      "tick": 921,
+      "x": 157,
+      "y": 56,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    },
+    {
+      "tick": 925,
+      "x": 37,
+      "y": 56,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    },
+    {
+      "tick": 944,
+      "x": 139,
+      "y": 54,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    },
+    {
+      "tick": 948,
+      "x": 232,
+      "y": 54,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    },
+    {
+      "tick": 951,
+      "x": 89,
+      "y": 55,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    },
+    {
+      "tick": 961,
+      "x": 139,
+      "y": 54,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    },
+    {
+      "tick": 964,
+      "x": 217,
+      "y": 54,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    },
+    {
+      "tick": 989,
+      "x": 37,
+      "y": 56,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    },
+    {
+      "tick": 997,
+      "x": 37,
+      "y": 55,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    },
+    {
+      "tick": 1005,
+      "x": 232,
+      "y": 53,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    },
+    {
+      "tick": 1009,
+      "x": 191,
+      "y": 53,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    },
+    {
+      "tick": 1017,
+      "x": 157,
+      "y": 55,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    },
+    {
+      "tick": 1027,
+      "x": 217,
+      "y": 54,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    },
+    {
+      "tick": 1032,
+      "x": 89,
+      "y": 55,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    },
+    {
+      "tick": 1048,
+      "x": 89,
+      "y": 58,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    },
+    {
+      "tick": 1053,
+      "x": 45,
+      "y": 54,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    },
+    {
+      "tick": 1056,
+      "x": 139,
+      "y": 54,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    },
+    {
+      "tick": 1060,
+      "x": 232,
+      "y": 54,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    },
+    {
+      "tick": 1063,
+      "x": 105,
+      "y": 54,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    },
+    {
+      "tick": 1070,
+      "x": 55,
+      "y": 56,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    },
+    {
+      "tick": 1079,
+      "x": 105,
+      "y": 54,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    },
+    {
+      "tick": 1088,
+      "x": 139,
+      "y": 54,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    },
+    {
+      "tick": 1111,
+      "x": 105,
+      "y": 54,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    },
+    {
+      "tick": 1116,
+      "x": 232,
+      "y": 54,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    },
+    {
+      "tick": 1120,
+      "x": 139,
+      "y": 54,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    },
+    {
+      "tick": 1123,
+      "x": 217,
+      "y": 56,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    },
+    {
+      "tick": 1127,
+      "x": 89,
+      "y": 55,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    },
+    {
+      "tick": 1140,
+      "x": 232,
+      "y": 54,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    },
+    {
+      "tick": 1142,
+      "x": 71,
+      "y": 54,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    },
+    {
+      "tick": 1149,
+      "x": 37,
+      "y": 55,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    },
+    {
+      "tick": 1157,
+      "x": 45,
+      "y": 54,
+      "motion": "front",
+      "source": "detección de vídeo; desaparición parcial por disparos"
+    }
+  ]
+}

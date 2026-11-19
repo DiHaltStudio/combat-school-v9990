@@ -1,0 +1,8 @@
+{
+  "fps": 30,
+  "frames": 1380,
+  "tracks": 75,
+  "bytes": 29032,
+  "source": "MAME, Step 4 sin disparos (tools/capture_step4_robots.lua, local-inputs/robots-mame.txt.gz), fotogramas 10237..12802",
+  "note": "Cada robot con su identidad del arcade; tools/build_step4_robots.py"
+}

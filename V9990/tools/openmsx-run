@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+tools_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
+upgraded="$tools_dir/../../../openmsx_v9990_upgraded"
+if [[ ! -x "$upgraded/run.sh" || ! -x "$upgraded/install/bin/openmsx" ]]; then
+    exec openmsx "$@"
+fi
+
+# run.sh changes directory before openMSX parses the cartridge path.
+args=()
+while (( $# )); do
+    args+=("$1")
+    case "$1" in
+        -cart|-script)
+            if (( $# > 1 )); then
+                shift
+                if [[ "$1" = /* ]]; then
+                    args+=("$1")
+                else
+                    args+=("$PWD/$1")
+                fi
+            fi
+            ;;
+    esac
+    shift
+done
+
+export COMBATSCHOOL_OPENMSX_CWD="$PWD"
+exec "$upgraded/run.sh" -script "$tools_dir/openmsx_cwd.tcl" "${args[@]}"

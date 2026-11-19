@@ -1,0 +1,73 @@
+{
+  "cover": "assets/opening.jpg",
+  "cover_shot": "docs/img/opening.png",
+  "title": "docs/img/title.png",
+  "montage": [
+    "docs/img/race.png",
+    "docs/img/shoot.png",
+    "docs/img/iron-man.png",
+    "docs/img/robots.png",
+    "docs/img/instructor.png",
+    "docs/img/mission.png"
+  ],
+  "huds": [
+    {
+      "name": "race-hud",
+      "src": "docs/img/race.png",
+      "box": [
+        30,
+        10,
+        288,
+        225
+      ],
+      "labels": [
+        [
+          1,
+          77,
+          20
+        ],
+        [
+          2,
+          239,
+          20
+        ],
+        [
+          3,
+          90,
+          130,
+          "b"
+        ],
+        [
+          4,
+          151,
+          220,
+          "b"
+        ]
+      ]
+    }
+  ],
+  "label": {
+    "lines": [
+      "COMBAT SCHOOL",
+      "MSX1 · 64K · ASCII16 · 2 MiB"
+    ],
+    "credit": "KONAMI 1987 · V9990 PORT: DIHALT STUDIO 2026",
+    "crop": [
+      0,
+      155,
+      600,
+      580
+    ],
+    "fit": false,
+    "accent": [
+      39,
+      87,
+      98
+    ],
+    "bg": [
+      8,
+      8,
+      20
+    ]
+  }
+}

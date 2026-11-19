@@ -1,0 +1,51 @@
+        org 0x4000
+        db "AB"
+        dw start
+        dw 0,0,0
+        ds 6,0
+start:
+        di
+        ld hl,500
+        ld de,500
+        call step3_project_y
+        jr c,fail
+        cp 120
+        jr nz,fail
+        ld hl,500
+        ld de,620
+        call step3_project_y
+        jr c,fail
+        or a
+        jr nz,fail
+        ld hl,500
+        ld de,621
+        call step3_project_y
+        jr nc,fail
+        ld hl,500
+        ld de,437
+        call step3_project_y
+        jr c,fail
+        cp 183
+        jr nz,fail
+        ld hl,500
+        ld de,436
+        call step3_project_y
+        jr nc,fail
+        ld hl,12
+        ld de,4000
+        call step3_project_y
+        jr nc,fail
+        ld hl,4000
+        ld de,12
+        call step3_project_y
+        jr nc,fail
+        ld a,1
+        ld (0xc700),a
+halt_forever:
+        jr halt_forever
+fail:
+        ld a,2
+        ld (0xc700),a
+        jr halt_forever
+        include "step3_camera.asm"
+        ds 0x8000-$,0xff

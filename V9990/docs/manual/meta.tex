@@ -1,0 +1,18 @@
+% Facts about the game. Edit this file; manual.tex and the lang files read it.
+\newcommand{\gameTitle}{Combat School}
+\newcommand{\originalPublisher}{Konami}
+\newcommand{\originalYear}{1987}
+\newcommand{\portAuthor}{DiHalt Studio}
+\newcommand{\portYear}{2026}
+\newcommand{\accentRGB}{39,87,98}      % accent colour of headings (R,G,B), taken from the cover
+\newcommand{\romFile}{CombatSchool-V9990.rom}
+\newcommand{\romKind}{2~MiB ASCII16 MegaROM}   % mapper and size
+\newcommand{\ramNeeded}{64~KB}
+\newcommand{\portWork}{MSX adaptation, V9990 graphics and sound arrangements}
+\newcommand{\portWorkES}{adaptaci\'on para MSX, gr\'aficos para V9990 y arreglos de sonido}
+% The game is a cartridge (ROM): the manual ends with a printable cartridge label.
+% Games on disk (MSX-DOS, floppy, hard disk, SD; usually MSX2 / turbo R) have no
+% label: \cartridgefalse (new_manual.py --media disk writes it).
+\newif\ifcartridge
+\cartridgetrue
+\newcommand{\releaseVersion}{1.0}
