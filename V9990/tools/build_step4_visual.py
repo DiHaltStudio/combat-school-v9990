@@ -94,9 +94,10 @@ draw_text(d,120,100,'YOU BLEW IT',10,scale=2,shadow=shadow_pen(palette))   # los
 draw_text(d,208,28,'1P',10,scale=2,shadow=shadow_pen(palette))   # single game score (draw_score), red
 d.text((216,48),'FAIL',fill=10)
 for x in range(26):d.rectangle((x*4,48,x*4+2,50),fill=10)
-# Red/orange projectile with a bright centre, observed in the arcade capture.
+# Red/orange projectile with a larger bright centre for the green field.
 d.polygon([(113,48),(114,48),(115,49),(115,51),(114,53),(113,52),(112,50)],fill=10)
-d.point((113,49),fill=9);d.point((114,50),fill=9);d.point((114,52),fill=7)
+d.rectangle((113,49,114,51),fill=9)
+d.point((114,52),fill=7)
 # Captured arcade flash, burning burst and dispersing fragments. Preserve alpha
 # when quantizing to the existing 16-colour palette and fixed 16x16 atlas slots.
 for x,name in zip((128,144,160),('flash','fire','embers')):

@@ -53,9 +53,6 @@ init:
         ld hl,settings
         ld bc,0x0863
         otir
-        ld hl,palette
-        ld bc,0x3061
-        otir
         ; Background at VRAM y=512, atlas at y=768.
         xor a
         out (0x64),a
@@ -229,6 +226,7 @@ loop:
         inc (hl)
 .draw_frame:
         call draw
+        call display_wait_command
         ld a,(0xc814)
         cp 2
         call z,result_input
@@ -247,12 +245,11 @@ loop:
         out (0x63),a
         xor 1
         ld (0xc802),a
+        ld hl,palette
+        call display_first_palette
         ei
-        ld a,8
-        out (0x64),a
-        ld a,0xc2
-        out (0x63),a
         jp loop
+        define DISPLAY_STAGE_HELPERS
         include "psg_calls.asm"   ; music calls, out of the flow
         include "psg_hats.asm"
 ; Arcade clock M:SS.t; when it reaches zero the player loses (TIME UP).

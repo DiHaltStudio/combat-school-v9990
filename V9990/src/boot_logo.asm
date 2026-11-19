@@ -305,14 +305,21 @@ boot_opening:
         or 0x80
         out (0x63),a
 .release_old:
+        ld e,0
         call boot_frame
         call boot_key
         jr nz,.release_old
 .wait_key:
+        ld e,0x20               ; F1 alone cannot dismiss the cover
         call boot_frame
         call boot_key
         jr z,.wait_key
+        bit 5,d                 ; sample F1 with the key that dismisses it
+        jr nz,.release_new
+        ld a,1
+        ld (0xf207),a
 .release_new:
+        ld e,0
         call boot_frame
         call boot_key
         jr nz,.release_new     ; the same key must not start the game too
@@ -323,17 +330,27 @@ boot_opening:
         out (0x63),a
         ret
 
-; Z if all keyboard rows are released. Restore the PPI selector.
+; Z if no key is pressed (E masks bits on row 6). D receives raw row 6.
+; Restore the PPI selector.
 boot_key:
         in a,(0xaa)
         push af
         and 0xf0
         ld c,a
+        or 6
+        out (0xaa),a
+        in a,(0xa9)
+        ld d,a
         ld b,11
 .row:
         ld a,c
         out (0xaa),a
+        ld a,b
+        cp 5                    ; row 6, counting down from 11
         in a,(0xa9)
+        jr nz,.check
+        or e
+.check:
         inc a
         jr nz,.pressed
         inc c

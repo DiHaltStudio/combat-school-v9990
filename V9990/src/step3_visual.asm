@@ -52,9 +52,6 @@ init:
         ld hl,settings
         ld bc,0x0863
         otir
-        ld hl,palette
-        ld bc,0x3061
-        otir
         ; A 256x256 diagnostic surface at y=512, supplied by banks 1-2.
         xor a
         out (0x64),a
@@ -251,42 +248,6 @@ loop:
         ld a,5
 .dt_ready:
         ld (0xc777),a
-        ; Arcade water: pen 15 rotates through four blues every 8 ticks.
-        ld a,14
-        out (0x64),a
-        ld a,60
-        out (0x63),a
-        ld a,(0xfc9e)
-        rrca
-        rrca
-        rrca
-        and 3
-        ld e,a
-        add a,a
-        add a,e
-        ld e,a
-        ld d,0
-        ld hl,water_cycle
-        add hl,de
-        ld bc,0x0361
-        otir
-        ; Pen 10, the river's other blues (arcade entries 23 and 24), two
-        ; steps ahead (tools/build_ironman_course.py).
-        ld a,14
-        out (0x64),a
-        ld a,40
-        out (0x63),a
-        ld a,e
-        add a,6
-        cp 12
-        jr c,.water_ahead
-        sub 12
-.water_ahead:
-        ld e,a
-        ld hl,water_cycle
-        add hl,de
-        ld bc,0x0361
-        otir
         ; The end of the loop already waits for vblank; no second HALT here.
         call race_clock
         call result_input
@@ -867,17 +828,55 @@ loop:
         out (0x63),a
         xor 1
         ld (0xc704),a
+        ld hl,palette
+        call display_first_palette
+        call cycle_water_palette
         ei
-        ld a,8
-        out (0x64),a
-        ld a,0xc2
-        out (0x63),a
         ; Let the new page reach the screen before the old one is redrawn.
 .shown:
         in a,(0x65)
         bit 6,a
         jr nz,.shown
         jp loop
+
+cycle_water_palette:
+        ; Arcade water: pen 15 rotates through four blues every 8 ticks.
+        ld a,14
+        out (0x64),a
+        ld a,60
+        out (0x63),a
+        ld a,(0xfc9e)
+        rrca
+        rrca
+        rrca
+        and 3
+        ld e,a
+        add a,a
+        add a,e
+        ld e,a
+        ld d,0
+        ld hl,water_cycle
+        add hl,de
+        ld bc,0x0361
+        otir
+        ; Pen 10, the river's other blues (arcade entries 23 and 24), two
+        ; steps ahead (tools/build_ironman_course.py).
+        ld a,14
+        out (0x64),a
+        ld a,40
+        out (0x63),a
+        ld a,e
+        add a,6
+        cp 12
+        jr c,.water_ahead
+        sub 12
+.water_ahead:
+        ld e,a
+        ld hl,water_cycle
+        add hl,de
+        ld bc,0x0361
+        otir
+        ret
 
 lane:
         ld a,(0xc706)
@@ -3224,6 +3223,7 @@ command:
         ld bc,21*256+0x63
         otir
         ret
+        define DISPLAY_STAGE_HELPERS
         include "psg_calls.asm"
         include "step3_camera.asm"
 ; The arcade's mines blink a red 2x2 dot in their dark centre: lit about 10

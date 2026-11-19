@@ -159,32 +159,80 @@ psg_defer_on:
         jr psg_none
 
 ; Screen changes (18-nov). Turning the display off in the middle of a frame
-; can cut that frame (the top of the old picture over black), and a palette
-; or picture written while it still shows flashes. display_off writes R8
-; inside the vertical retrace (P#5 bit 6), between two frames, with the
-; interrupts held off for those few instructions, then waits until the
-; retrace ends: the whole next frame is off, whether the V9990 takes R8 at
-; once or when the frame starts. At most two frames. wait_retrace waits for
-; the retrace to begin: a palette written then (48 bytes take a few lines)
-; changes between two frames, never in the middle of one. Both keep the
-; interrupts as they are and every register but A and F.
+; can cut it in two. Change only R#8 bit 7 during a fresh VBlank and let
+; the blank end before overwriting the old picture. Keep the caller's
+; interrupt state and all registers except AF.
 display_off:
         ld a,i                  ; P/V = interrupts enabled
         push af
         di
         call wait_retrace
-        ld a,8
-        out (0x64),a
-        ld a,0x42               ; display off, sprites off, 512 KiB VRAM
-        out (0x63),a
+        call display_disable
         pop af
-        jp po,.started
+        jp po,wait_retrace_end
         ei
-.started:
+wait_retrace_end:
         in a,(0x65)
         bit 6,a
-        jr nz,.started
+        jr nz,wait_retrace_end
         ret
+
+display_disable:
+        ld a,0xc8
+        out (0x64),a
+        in a,(0x63)
+        and 0x7f
+        out (0x63),a
+        ret
+
+        ifdef DISPLAY_STAGE_HELPERS
+; Outgoing B1 map. Caller owns DI. Ink bank 0 and the border (entry 0)
+; go black in the same retrace in which the display is disabled.
+display_map_off:
+        call wait_retrace
+        ld a,14
+        out (0x64),a
+        xor a
+        out (0x63),a
+        ld b,48                 ; all 16 visible RGB colours
+.black:
+        out (0x61),a
+        djnz .black
+        call display_disable
+        jp wait_retrace_end
+
+; The next page is complete and selected, and we are already in VBlank.
+; HL = first frame's palette. Only the first flip uploads it and enables
+; the display. DI stays in effect until the caller completes publication.
+display_first_palette:
+        ld a,0xc8
+        out (0x64),a
+        in a,(0x63)
+        bit 7,a
+        ret nz
+        call display_write_palette
+display_enable:
+        ld a,0xc8               ; R#8, neither auto-increment enabled
+        out (0x64),a
+        in a,(0x63)
+        or 0x80
+        out (0x63),a
+        ret
+; HL points to the 16 B1 colours. Caller has just reached retrace.
+display_write_palette:
+        ld a,14
+        out (0x64),a
+        xor a
+        out (0x63),a
+        ld bc,0x3061
+        otir
+        ret
+display_wait_command:
+        in a,(0x65)
+        rrca
+        jr c,display_wait_command
+        ret
+        endif
 wait_retrace:
         in a,(0x65)
         bit 6,a

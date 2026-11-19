@@ -54,7 +54,6 @@ slot_ready:
         xor a
         ld (0xd0fe),a          ; tests skip the introduction with A5 here
         ld (0xf200),a
-        ld (0xf207),a          ; default flag until F1 is sampled at start
         ; New game: the score (C75C..C75E, read by the RANKING after GAME OVER)
         ; and the bonuses of Steps 1 and 2 start at zero.
         ld (0xc75e),a
@@ -879,7 +878,7 @@ loop:
         or a
         jr nz,.decay
         ld a,(0xc008)
-        add a,12
+        add a,6                ; impulso por flanco de pulsación
         cp 49
         jr c,.store_energy
         ld a,48
@@ -3153,8 +3152,10 @@ progress_screens:
         pop hl
         or a
         sbc hl,de
-        jp nc,shoot_start
-        jr .blink_map
+        jr c,.blink_map
+        di
+        call display_map_off
+        jp shoot_start
 
  ; Draw the selected 18x8 marker from the picture's extra data, whose bank
  ; intro_frame leaves mapped. A=bonus bracket, c0b6=VRAM page.
@@ -3258,6 +3259,8 @@ progress_square:
 ; captured character introduction. All frames use their own B1 palette.
 ; The cartridge's start address: asks init for the power-on screens.
 boot:
+        xor a
+        ld (0xf207),a           ; default until the power-on cover selects MSX
         ld a,0xa5
         ld (0xd0f3),a
         jp init
@@ -3300,15 +3303,6 @@ show_intro:
         or a
         jr z,.wait_start
 .start:
-        ; F1 is sampled only when starting; f207 persists for this game.
-        ld a,6
-        call 0x0141
-        bit 5,a
-        ld a,0
-        jr nz,.flag_selected
-        inc a
-.flag_selected:
-        ld (0xf207),a
         ld a,2
         ld (0xc0b3),a
         ld a,1                  ; PLAYER READY music, as the arcade after START
@@ -3646,6 +3640,7 @@ sprite_template:
         include "intro_slide.asm"
         include "../build/psg/driver.inc"
         include "psg_music.asm"
+        define DISPLAY_STAGE_HELPERS
         include "psg_calls.asm"
 regs:   db 0x81,0,0x42,0
 settings: db 0,0,0,0,0,0,0,0

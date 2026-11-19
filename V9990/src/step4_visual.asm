@@ -52,9 +52,6 @@ init:
         ld hl,settings
         ld bc,0x0863
         otir
-        ld hl,palette
-        ld bc,0x3061
-        otir
         ; Field at y=512 from two ASCII16 banks.
         xor a
         out (0x64),a
@@ -168,6 +165,7 @@ loop:
         call advance_wave
 .draw:
         call draw
+        call display_wait_command
 .wait_end:
         di                      ; no interrupt between the blank and the page (music)
         in a,(0x65)
@@ -183,13 +181,12 @@ loop:
         out (0x63),a
         xor 1
         ld (0xc80a),a
-        ei
+        ld hl,palette
+        call display_first_palette
         call animate_robot_panel
-        ld a,8
-        out (0x64),a
-        ld a,0xc2
-        out (0x63),a
+        ei
         jp loop
+        define DISPLAY_STAGE_HELPERS
         include "psg_calls.asm"   ; music calls, out of the flow
  ; The arcade alternates the magenta panel between bright and dark purple.
  ; Only robots use palette index 11. R14 uses four addresses per entry.

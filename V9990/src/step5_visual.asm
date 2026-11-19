@@ -56,9 +56,6 @@ init:
         out (0x64),a
         xor a
         out (0x63),a
-        ld hl,palette
-        ld bc,0x3061
-        otir
         ; Front at y=512, top view at y=768, animation atlas at y=1024.
         xor a
         out (0x64),a
@@ -192,6 +189,7 @@ loop:
         call update_contest
 .frame:
         call draw
+        call display_wait_command
 .wait_end:
         di                      ; no interrupt between the blank and the page (music)
         in a,(0x65)
@@ -207,15 +205,14 @@ loop:
         out (0x63),a
         xor 1
         ld (0xc886),a
+        ld hl,palette
+        call display_first_palette
         ei
-        ld a,8
-        out (0x64),a
-        ld a,0xc2
-        out (0x63),a
         ld a,(0xc885)
         inc a
         ld (0xc885),a
         jp loop
+        define DISPLAY_STAGE_HELPERS
         include "psg_calls.asm"   ; music calls, out of the flow
 ; A seconds since phase began, carry if still waiting.
 elapsed_seconds:

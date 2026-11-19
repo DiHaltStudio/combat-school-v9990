@@ -97,7 +97,7 @@ proc wait_map5 {} {
  after frame watch_step6
 }
 proc watch_step6 {} {
- if {[peek 0xc418]==17} {
+ if {[peek 0xc418]==17 && ([debug read "Sunrise GFX9000 regs" 8] & 0x80)} {
   set f [open "$::out/step6-start.txt" w]
   puts $f "[peek 0xc418] [peek 0xc45b] [peek 0xc435] [peek 0xc432] [peek 0xc45d]"
   close $f;exit

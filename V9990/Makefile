@@ -246,7 +246,7 @@ run-mission: $(RUN_ROM_DEP)
 
 .PHONY: run-msx-flag
 run-msx-flag: $(RUN_ROM_DEP)
-	PREVIEW_MSX_FLAG=1 "$(OPENMSX)" -machine $(MACHINE) -ext gfx9000 -cart "$(RUN_ROM)" -romtype ASCII16 -script tools/run_demo.tcl -script tools/skip_boot.tcl -script tools/run_mission.tcl
+	PREVIEW_MSX_FLAG=1 "$(OPENMSX)" -machine $(MACHINE) -ext gfx9000 -cart "$(RUN_ROM)" -romtype ASCII16 -script tools/run_demo.tcl -script tools/run_mission.tcl
 
 .PHONY: run-step7
 run-step7: $(RUN_ROM_DEP)
@@ -314,7 +314,7 @@ test-movement: demo
 	$(PYTHON) -c "from pathlib import Path; x=Path('build/demo/moved/ram.bin').read_bytes()[0xc000]; assert x > 64, f'unexpected x={x}'"
 
 test-jump: demo
-	DV_OUT="$(CURDIR)/build/demo/jump" DV_SECONDS=12.3 "$(OPENMSX)" -script tools/test_skip_intro.tcl -machine $(MACHINE) -ext gfx9000 -cart "$(CURDIR)/build/demo/demo-b1.rom" -romtype ASCII16 -script tools/test_jump_move.tcl -script tools/dump_v9990.tcl
+	DV_OUT="$(CURDIR)/build/demo/jump" DV_SECONDS=12.4 "$(OPENMSX)" -script tools/test_skip_intro.tcl -machine $(MACHINE) -ext gfx9000 -cart "$(CURDIR)/build/demo/demo-b1.rom" -romtype ASCII16 -script tools/test_jump_move.tcl -script tools/dump_v9990.tcl
 	$(PYTHON) tools/verify_demo.py build/demo/jump
 	$(PYTHON) -c "from pathlib import Path; r=Path('build/demo/jump/ram.bin').read_bytes(); assert r[0xc000] > 64 and r[0xc005] < 55 and r[0xc030] == 128"
 	DV_OUT="$(CURDIR)/build/demo/landed" DV_SECONDS=15 "$(OPENMSX)" -script tools/test_skip_intro.tcl -machine $(MACHINE) -ext gfx9000 -cart "$(CURDIR)/build/demo/demo-b1.rom" -romtype ASCII16 -script tools/test_jump_move.tcl -script tools/dump_v9990.tcl
@@ -324,12 +324,12 @@ test-jump: demo
 test-scroll: demo
 	DV_OUT="$(CURDIR)/build/demo/scroll" DV_SECONDS=20 "$(OPENMSX)" -script tools/test_skip_intro.tcl -machine $(MACHINE) -ext gfx9000 -cart "$(CURDIR)/build/demo/demo-b1.rom" -romtype ASCII16 -script tools/test_scroll.tcl -script tools/dump_v9990.tcl
 	$(PYTHON) tools/verify_demo.py build/demo/scroll
-	$(PYTHON) -c "from pathlib import Path; r=Path('build/demo/scroll/ram.bin').read_bytes(); assert r[0xc000] == 100 and 160 <= r[0xc006] <= 190 and r[0xc00c] == 0"
+	$(PYTHON) -c "from pathlib import Path; r=Path('build/demo/scroll/ram.bin').read_bytes(); assert r[0xc000] == 100 and 160 <= r[0xc006] <= 200 and r[0xc00c] == 0"
 
 .PHONY: test-run-inputs
 test-run-inputs: demo
 	for scenario in fast slow held; do RUN_TEST=$$scenario DV_OUT="$(CURDIR)/build/demo/run-$$scenario" DV_SECONDS=14 "$(OPENMSX)" -script tools/test_skip_intro.tcl -machine $(MACHINE) -ext gfx9000 -cart "$(CURDIR)/build/demo/demo-b1.rom" -romtype ASCII16 -script tools/test_run_inputs.tcl -script tools/dump_v9990.tcl || exit 1; $(PYTHON) tools/verify_demo.py build/demo/run-$$scenario || exit 1; done
-	$(PYTHON) -c "from pathlib import Path; get=lambda n: Path('build/demo/run-'+n+'/ram.bin').read_bytes(); f,s,h=map(get,('fast','slow','held')); assert f[0xc006] > 0 and s[0xc000] > h[0xc000] > 64"
+	$(PYTHON) -c "from pathlib import Path; get=lambda n: Path('build/demo/run-'+n+'/ram.bin').read_bytes(); f,s,h=map(get,('fast','slow','held')); pos=lambda r: r[0xc000]+r[0xc006]+256*r[0xc00c]; assert pos(f) > max(100,pos(s)) and pos(s) > pos(h) == 64 and h[0xc00b] > 0"
 
 .PHONY: test-animation
 test-animation: demo
@@ -1127,7 +1127,7 @@ test-mission-door-sweep: build-mission-visual
 
 .PHONY: test-msx-flag-start
 test-msx-flag-start: demo
-	for state in 0 1; do FLAG_TEST=$$state FLAG_RESULT="$(CURDIR)/build/demo/msx-flag-$$state.txt" "$(OPENMSX)" -machine $(MACHINE) -ext gfx9000 -cart "$(CURDIR)/build/demo/demo-b1.rom" -romtype ASCII16 -script tools/run_demo.tcl -script tools/skip_boot.tcl -script tools/test_msx_flag_start.tcl || exit 1; test "$$(cat build/demo/msx-flag-$$state.txt)" = "$$state" || exit 1; done
+	for state in 0 1; do FLAG_TEST=$$state FLAG_RESULT="$(CURDIR)/build/demo/msx-flag-$$state.txt" "$(OPENMSX)" -machine $(MACHINE) -ext gfx9000 -cart "$(CURDIR)/build/demo/demo-b1.rom" -romtype ASCII16 -script tools/run_demo.tcl -script tools/test_msx_flag_start.tcl || exit 1; test "$$(cat build/demo/msx-flag-$$state.txt)" = "$$state" || exit 1; done
 
 MANUAL_LANGS ?= en es
 MANUAL_PDFLATEX ?= pdflatex

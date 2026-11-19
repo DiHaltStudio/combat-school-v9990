@@ -137,6 +137,7 @@ step4_transition:
         sbc hl,de
         jr c,.map_wait
         di
+        call display_map_off
         ld hl,step5_trampoline
         ld de,0xca80
         ld bc,step5_trampoline_end-step5_trampoline
@@ -230,6 +231,7 @@ step5_transition:
         sbc hl,de
         jr c,.map_wait
         di
+        call display_map_off
         ld hl,step6_trampoline
         ld de,0xca80
         ld bc,step6_trampoline_end-step6_trampoline
@@ -377,6 +379,7 @@ step3_transition:
         jr c,.map_loop
         ; Switching page 1 executes a RAM trampoline until Step 4 is mapped.
         di
+        call display_map_off
         ld hl,transition_trampoline
         ld de,0xca80
         ld bc,transition_trampoline_end-transition_trampoline

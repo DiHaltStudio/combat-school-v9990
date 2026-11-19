@@ -9,16 +9,22 @@ set ::combat 0
 set ::rank 0
 set ::preview_msx_flag [info exists ::env(PREVIEW_MSX_FLAG)]
 
-# Let the cartridge sample F1 and SPACE at the title before skipping ahead.
-proc mission_preview_start {} {
- if {[peek 0xc0b3] != 3} {
-  after frame mission_preview_start
+# Use the real F1 shortcut on the cover before skipping ahead.
+proc mission_preview_cover {} {
+ if {[debug read "Sunrise GFX9000 regs" 6] != 0x96 ||
+     !([debug read "Sunrise GFX9000 regs" 8] & 0x80)} {
+  after frame mission_preview_cover
   return
  }
- keymatrixup 6 32
- keymatrixup 8 1
- if {[peek 0xf207] != 1} {puts stderr "The title did not select the MSX flag"; exit 1}
- mission_enter_step6
+ after time 0.10 {
+  keymatrixdown 6 32
+  keymatrixdown 8 1
+  after time 0.15 {
+   keymatrixup 6 32
+   keymatrixup 8 1
+   mission_launch
+  }
+ }
 }
 
 proc mission_launch {} {
@@ -26,14 +32,11 @@ proc mission_launch {} {
   after time 0.02 mission_launch
   return
  }
- if {$::preview_msx_flag} {
-  poke 0xd0fe 0xa5
-  keymatrixdown 6 32
-  keymatrixdown 8 1
-  after frame mission_preview_start
- } else {
-  mission_enter_step6
+ if {$::preview_msx_flag && [peek 0xf207] != 1} {
+  puts stderr "The cover did not select the MSX flag"
+  exit 1
  }
+ mission_enter_step6
 }
 
 proc mission_enter_step6 {} {
@@ -68,4 +71,8 @@ proc mission_watch {} {
  }
  after time 0.02 mission_watch
 }
-after time 1 mission_launch
+if {$::preview_msx_flag} {
+ after time 1 mission_preview_cover
+} else {
+ after time 1 mission_launch
+}

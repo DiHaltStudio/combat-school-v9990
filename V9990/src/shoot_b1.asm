@@ -3,6 +3,8 @@
 ; c435 seconds, c436 JIFFY, c438 page, c439 wave, c43a state,
 ; c43b target y, c43f bonus seconds, c440 bonus points, c45f hits before
 ; the current wave (for the arcade's points by hit order).
+SHOOT_TRACER_PHASE equ 0xc48a    ; 0: inactive, 7/5/3/1: path fractions
+SHOOT_TRACER_AIM equ 0xc48b      ; x, y at trigger time
 shoot_start:
         xor a
         ld (0xc45b),a          ; first shooting range
@@ -19,8 +21,6 @@ step6_entry:
 shoot_start_common:
         di
         call display_off        ; off from the next frame on
-        ld hl,shoot_palette
-        call intro_set_palette
         ld a,15
         out (0x64),a
         xor a
@@ -119,6 +119,7 @@ shoot_start_common:
         ld (0xc441),a
         ld (0xc454),a
         ld (0xc45e),a          ; instructor penalty inactive
+        ld (SHOOT_TRACER_PHASE),a
         ld hl,0xc470           ; no explosion (shoot_explode)
         ld b,20
 .no_explosion:
@@ -297,6 +298,7 @@ shoot_progress_screens:
         ; Switching page 1 replaces this code immediately. Execute the
         ; mapper change and jump from RAM so the switch is atomic.
         di
+        call display_map_off
         ld hl,step3_trampoline
         ld de,0xc800
         ld bc,step3_trampoline_end-step3_trampoline
@@ -523,6 +525,7 @@ step6_progress_map:
         sbc hl,de
         jr c,.map_wait
         di
+        call display_map_off
         ld hl,step7_trampoline
         ld de,0xca80
         ld bc,step7_trampoline_end-step7_trampoline
@@ -813,6 +816,10 @@ shoot_input:
         ld a,c
         or a
         ret nz
+        ld hl,(0xc430)
+        ld (SHOOT_TRACER_AIM),hl
+        ld a,7
+        ld (SHOOT_TRACER_PHASE),a
         jp shoot_hit            ; only a hit sounds (SFX_HIT)
 
 shoot_directions:
@@ -1238,6 +1245,7 @@ shoot_draw:
         djnz .targets
 .crosshair:
         call shoot_explosions
+        call shoot_tracer
         ld a,(0xc430)
         ld d,a
         ld a,(0xc431)
@@ -1387,10 +1395,8 @@ shoot_draw:
         out (0x63),a
         xor 1
         ld (0xc438),a
-        ld a,8
-        out (0x64),a
-        ld a,0xc2
-        out (0x63),a
+        ld hl,shoot_palette
+        call display_first_palette
         ei
         ret
 
@@ -1455,14 +1461,7 @@ shoot_player_pose:
         jr .selected
 .aim:
         ld a,(0xc430)
-        cp 72
-        ld a,0
-        jr c,.selected
-        ld a,(0xc430)
-        cp 136
-        ld a,1
-        jr c,.selected
-        ld a,2
+        call shoot_aim_pose
 .selected:
         ld (0xc45a),a
         ld b,a
@@ -1483,6 +1482,84 @@ shoot_player_pose:
         ld (0xc307),a
         ld hl,0xc300
         jp command
+
+; A = sight x. Return the same pose index for the rifle and the shot origin.
+shoot_aim_pose:
+        cp 72
+        jr c,.left
+        cp 136
+        ld a,1
+        ret c
+        inc a
+        ret
+.left:
+        xor a
+        ret
+
+; Draw a cosmetic projectile on the back page. Hits still resolve at the
+; trigger edge. Four frames show 1/8, 3/8, 5/8 and 7/8 of the path towards
+; the original sight position.
+shoot_tracer:
+        ld a,(SHOOT_TRACER_PHASE)
+        or a
+        ret z
+        ld b,a
+        sub 2
+        jr nc,.phase_ready
+        xor a
+.phase_ready:
+        ld (SHOOT_TRACER_PHASE),a
+        ld a,(SHOOT_TRACER_AIM)
+        call shoot_aim_pose
+        add a,a
+        ld e,a
+        ld d,0
+        ld hl,shoot_muzzles
+        add hl,de
+        ld a,(SHOOT_TRACER_AIM)
+        add a,6                 ; center a 5x5 dot on the sight center
+        ld c,a
+        ld a,(hl)
+        call shoot_tracer_axis
+        ld (0xc488),a
+        inc hl
+        ld a,(SHOOT_TRACER_AIM+1)
+        add a,6
+        ld c,a
+        ld a,(hl)
+        call shoot_tracer_axis
+        ld (0xc489),a
+        ld hl,shoot_tracer_atlas
+        ld de,0xc484            ; reuse explosion blit descriptor after drawing it
+        ld bc,4
+        ldir
+        ld hl,0xc484
+        jp shoot_blit
+
+; A = muzzle, C = aim, B = phase. Read the three bits of the
+; fraction from right to left, averaging with the muzzle or aim each time.
+shoot_tracer_axis:
+        push bc
+        ld d,a
+        ld a,8
+        sub b
+        ld e,a
+        ld b,3
+        ld a,d
+.fraction:
+        srl e
+        jr c,.toward_aim
+        add a,d
+        jr .average
+.toward_aim:
+        add a,c
+.average:
+        rra                     ; midpoint, including the carry from the sum
+        djnz .fraction
+        pop bc
+        ret
+shoot_muzzles:      db 59,136, 62,139, 84,139
+shoot_tracer_atlas: db 202,0,5,5
 
 ; A=atlas x, D/E=destination. Default 16x16.
 shoot_sprite:

@@ -314,6 +314,7 @@ ticks:
         ld (ACC),a
         ret
 
+        define DISPLAY_STAGE_HELPERS
         include "psg_calls.asm"   ; music calls, out of the flow
 reset_clock:
         ld hl,(JIFFY)
@@ -1059,6 +1060,7 @@ made_it:
         sbc hl,de
         jr c,.map
         di
+        call display_map_off
         ; Next step, as its own transition leaves it: no bonus seconds or
         ; points, the 50/60 Hz rate in c734.
         ld a,(0x002b)

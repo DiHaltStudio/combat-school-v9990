@@ -100,6 +100,9 @@ for a in ((17,1,21,1),(17,1,17,5),(26,1,30,1),(30,1,30,5),
 # (its counters 0001/0000), 8 rows of the 10 the copies take.
 draw_text(d,32,0,'0123456789',14,scale=2,shadow=shadow_pen(pal))
 for n in range(22): d.rectangle((112+n*4,0,114+n*4,2),fill=15)
+# Projectile in x=202..206, rows 0..4. Amber outline, near-white center.
+d.polygon(((204,0),(206,2),(204,4),(202,2)),fill=15)
+d.line((204,1,204,3),fill=14)
 # The target occupies x=0..15 and extends through row 23. Keep the
 # success label outside its complete 16x24 source rectangle.
 draw_text(d,32,16,'YOU MADE IT',14,scale=2,shadow=shadow_pen(pal))
